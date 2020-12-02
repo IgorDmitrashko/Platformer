@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D _pLayerRigitBody2D;
     private Animator _playerAnimator;
+    private AudioSource _playerAudio;
 
     private Material _materialBlick;
     private Material _materialDefault;
@@ -29,7 +30,8 @@ public class Player : MonoBehaviour
 
     public event Action<int> TakeHeatPoint;
     public event Action Death;
-    public event Action<Animator> JumpEvent;
+    public event Action<Animator, AudioSource> JumpEvent;
+    public event Action<Animator> DontJumpEvent;
 
     public bool _isGround;
 
@@ -39,6 +41,7 @@ public class Player : MonoBehaviour
         _health = GetComponent<HealthPlayerControl>();
         _pLayerRigitBody2D = GetComponent<Rigidbody2D>();
         _playerAnimator = GetComponent<Animator>();
+        _playerAudio = GetComponent<AudioSource>();
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -52,12 +55,11 @@ public class Player : MonoBehaviour
     private void FixedUpdate() {
         if(Input.GetButton("Jump") && _isGround)
         {
-            _playerAnimator.SetBool("IsJump", true);
             Jump();
         }
         else
         {
-            _playerAnimator.SetBool("IsJump", false);
+            DontJumpEvent?.Invoke(_playerAnimator);
         }
 
     }
@@ -114,6 +116,6 @@ public class Player : MonoBehaviour
 
     private void Jump() {
         _pLayerRigitBody2D.AddForce(transform.up * _jumpForce, ForceMode2D.Impulse);
-        JumpEvent?.Invoke(_playerAnimator);
+        JumpEvent?.Invoke(_playerAnimator, _playerAudio);
     }
 }
