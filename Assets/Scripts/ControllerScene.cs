@@ -5,9 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class ControllerScene : MonoBehaviour
 {
-    public void LoadScene(int level) {
-        StartCoroutine(WaithLoad(level));        
+    public void LoadSceneDelayed(int level) {
+        StartCoroutine(WaithLoad(level));
     }
+
+    public void LoadScene(int level) {
+        SceneManager.LoadScene(level);
+    }
+
     public IEnumerator WaithLoad(int level) {
         yield return new WaitForSeconds(5);
         SceneManager.LoadScene(level);

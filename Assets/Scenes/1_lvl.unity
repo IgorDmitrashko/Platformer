@@ -3540,7 +3540,7 @@ PrefabInstance:
     - target: {fileID: 3908745521630144782, guid: c786c643a323cbb4b866eaad2719c4cf,
         type: 3}
       propertyPath: levelComplete.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadScene
+      value: LoadSceneDelayed
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c786c643a323cbb4b866eaad2719c4cf, type: 3}

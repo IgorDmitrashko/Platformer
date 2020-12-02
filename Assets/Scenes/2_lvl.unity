@@ -6551,7 +6551,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 686940829}
-        m_MethodName: LoadScene
+        m_MethodName: LoadSceneDelayed
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
