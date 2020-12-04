@@ -14,7 +14,7 @@ public class Coins : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.CompareTag("Player"))
         {          
-            updateCoins.UpdateConfigeration();
+            //updateCoins.UpdateConfigeration();           
             Destroy(gameObject);
         }
     }

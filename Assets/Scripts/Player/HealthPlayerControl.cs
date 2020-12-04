@@ -11,14 +11,13 @@ public class HealthPlayerControl : MonoBehaviour
 
     private void Start() {
         healthPlayer = GetComponent<HealthPlayer>();
-        Fill();
-     
+        
         Player.Singelton.TakeHeatPoint += TakeHp;
-        Player.Singelton.Death += Fill;
+        Player.Singelton.DeathEvent += Fill;
 
     }
 
-    private void Fill() {
+    private void Fill(AudioSource audio) {
         if(healthPlayer != null)
         {
             for(int i = 0; i < hp; i++)

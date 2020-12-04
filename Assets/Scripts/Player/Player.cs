@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,17 +6,20 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D _pLayerRigitBody2D;
     private Animator _playerAnimator;
-    private AudioSource _playerAudio;
+
+    [SerializeField] private AudioSource _playerAudioJump;
+    [SerializeField] private AudioSource _playerAudioDeath;
+    [SerializeField] private AudioSource _playerAudioCoins;
 
     private Material _materialBlick;
     private Material _materialDefault;
     private SpriteRenderer _spriteRend;
 
-    [Header("Player movement speed")]
-    [SerializeField] private float speed = 2.0f;
+    private float speed = 3.4f;
+    private float _jumpForce = 2.0f;
 
-    [Header("Jump force")]
-    [SerializeField] private float _jumpForce = 1.0f;
+    private int _numberscene = 0;
+    private int _delayedloadscene = 3;
 
     [NonSerialized] private HealthPlayerControl _health;
 
@@ -29,11 +28,17 @@ public class Player : MonoBehaviour
     public static Player Singelton { get; private set; }
 
     public event Action<int> TakeHeatPoint;
-    public event Action Death;
+
+
+    public event Action<AudioSource> DeathEvent;
+    public event Action<int, int> LoadingSceneOnDeathEvent;
+
     public event Action<Animator, AudioSource> JumpEvent;
     public event Action<Animator> DontJumpEvent;
 
-    public bool _isGround;
+    public event Action<AudioSource> PickUpCoinsEvent;
+
+    [NonSerialized] public bool _isGround;
 
 
     private void Awake() {
@@ -41,7 +46,6 @@ public class Player : MonoBehaviour
         _health = GetComponent<HealthPlayerControl>();
         _pLayerRigitBody2D = GetComponent<Rigidbody2D>();
         _playerAnimator = GetComponent<Animator>();
-        _playerAudio = GetComponent<AudioSource>();
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -85,10 +89,22 @@ public class Player : MonoBehaviour
         TakeHeatPoint?.Invoke(damage);
         if(_health.hp <= 0)
         {
-            Death?.Invoke();
-            SceneManager.LoadScene("MainMeny");
+            DeathEvent?.Invoke(_playerAudioDeath);
+            LoadingSceneOnDeathEvent?.Invoke(_numberscene, _delayedloadscene);
         }
         Twinkle();
+    }
+  
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if(collision.tag == "Coins")
+        {
+            if(_playerAudioCoins != null)
+            {
+                PickUpCoinsEvent?.Invoke(_playerAudioCoins);
+            }
+
+        }
     }
 
     private void Twinkle() {
@@ -116,6 +132,10 @@ public class Player : MonoBehaviour
 
     private void Jump() {
         _pLayerRigitBody2D.AddForce(transform.up * _jumpForce, ForceMode2D.Impulse);
-        JumpEvent?.Invoke(_playerAnimator, _playerAudio);
+        if(_playerAnimator != null && _playerAudioJump != null)
+        {
+            JumpEvent?.Invoke(_playerAnimator, _playerAudioJump);
+        }
+
     }
 }

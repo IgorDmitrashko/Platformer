@@ -7,6 +7,12 @@ public class AnimationAndSound : MonoBehaviour
     private void Start() {
         Player.Singelton.JumpEvent += Jump;
         Player.Singelton.DontJumpEvent += DontJump;
+        Player.Singelton.DeathEvent += PlayerDeathAudio;
+    }
+
+    public void PlayerDeathAudio(AudioSource audio) {
+        StartCoroutine(WaitForSeconds(3));
+        audio.Play();
     }
 
     private void Jump(Animator animator, AudioSource audio) {
@@ -14,6 +20,9 @@ public class AnimationAndSound : MonoBehaviour
         audio.Play();
     }
 
+    private IEnumerator WaitForSeconds(int second) {
+        yield return new WaitForSeconds(second);       
+    }
     private void DontJump(Animator animator) => animator.SetBool("IsJump", false);
 
 

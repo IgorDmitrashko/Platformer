@@ -5,17 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class ControllerScene : MonoBehaviour
 {
-    public void LoadSceneDelayed(int level) {
-        StartCoroutine(WaithLoad(level));
+
+    private void Start() {
+        Player.Singelton.LoadingSceneOnDeathEvent += LoadSceneDelayed;
+    }
+
+
+
+    public void LoadSceneDelayed(int level, int delayed = 5) {
+        StartCoroutine(WaithLoad(level,delayed));
     }
 
     public void LoadScene(int level) {
         SceneManager.LoadScene(level);
     }
 
-    public IEnumerator WaithLoad(int level) {
-        yield return new WaitForSeconds(5);
+    private IEnumerator WaithLoad(int level,int delayed = 5) {
+        yield return new WaitForSeconds(delayed);
         SceneManager.LoadScene(level);
-    }
 
+    }
 }

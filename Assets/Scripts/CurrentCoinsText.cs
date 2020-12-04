@@ -19,10 +19,17 @@ public class CurrentCoinsText : MonoBehaviour
     
     private void Awake() {
         updateEventGame = GameObject.FindGameObjectWithTag("UpdateEventGame").GetComponent<UpdateEventGame>();
-       // updateEventGame.CoinsChanged += AddCoins;
+
+        // updateEventGame.CoinsChanged += AddCoins;
+        Player.Singelton.PickUpCoinsEvent += AddCoins;
     }   
-    public void AddCoins() {
+    public void AddCoins(AudioSource audio) {
         CurrentNumberCoins ++;
+        PlayAudioCoins(audio);
+    }
+
+    private void PlayAudioCoins(AudioSource audio) {
+        audio.Play();
     }
 
 }
