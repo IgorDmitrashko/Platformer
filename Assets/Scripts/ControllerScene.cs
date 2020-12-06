@@ -5,24 +5,35 @@ using UnityEngine.SceneManagement;
 
 public class ControllerScene : MonoBehaviour
 {
+    [SerializeField] private GameObject _convas;
+    private PauseMenu _pauseMenu;
 
     private void Start() {
-        Player.Singelton.LoadingSceneOnDeathEvent += LoadSceneDelayed;
+        if(Player.Singelton!=null)
+        {
+            Player.Singelton.LoadingSceneOnDeathEvent += LoadSceneDelayed;
+        }
+       
+        if(_convas != null)
+        {
+            _pauseMenu = _convas.GetComponent<PauseMenu>();
+            _pauseMenu.LoadMainMenuEvent += LoadScene;           
+        }
     }
 
 
 
     public void LoadSceneDelayed(int level, int delayed = 5) {
-        StartCoroutine(WaithLoad(level,delayed));
+        StartCoroutine(WaithLoad(level, delayed));
     }
 
     public void LoadScene(int level) {
         SceneManager.LoadScene(level);
-    }
+        PauseMenu.gameIsPaused = false;
+    }  
 
-    private IEnumerator WaithLoad(int level,int delayed = 5) {
+    private IEnumerator WaithLoad(int level, int delayed = 5) {
         yield return new WaitForSeconds(delayed);
         SceneManager.LoadScene(level);
-
     }
 }

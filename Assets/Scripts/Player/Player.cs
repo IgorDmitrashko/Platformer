@@ -15,20 +15,19 @@ public class Player : MonoBehaviour
     private Material _materialDefault;
     private SpriteRenderer _spriteRend;
 
-    private float speed = 3.4f;
-    private float _jumpForce = 2.0f;
+    private readonly float speed = 3.4f;
+    private readonly float _jumpForce = 2.0f;
 
     private int _numberscene = 0;
     private int _delayedloadscene = 3;
 
     [NonSerialized] private HealthPlayerControl _health;
-
     private SpriteRenderer _playerSpriteRenderer;
 
     public static Player Singelton { get; private set; }
+    public bool managementAllowed = true;
 
     public event Action<int> TakeHeatPoint;
-
 
     public event Action<AudioSource> DeathEvent;
     public event Action<int, int> LoadingSceneOnDeathEvent;
@@ -37,7 +36,6 @@ public class Player : MonoBehaviour
     public event Action<Animator> DontJumpEvent;
 
     public event Action<AudioSource> PickUpCoinsEvent;
-
     [NonSerialized] public bool _isGround;
 
 
@@ -53,7 +51,6 @@ public class Player : MonoBehaviour
         _spriteRend = gameObject.GetComponent<SpriteRenderer>();
         _materialBlick = Resources.Load("EnemyBlick", typeof(Material)) as Material;
         _materialDefault = _spriteRend.material;
-
     }
 
     private void FixedUpdate() {
@@ -65,11 +62,10 @@ public class Player : MonoBehaviour
         {
             DontJumpEvent?.Invoke(_playerAnimator);
         }
-
     }
     void Update() {
 
-        if(Input.GetButton("Horizontal"))
+        if(Input.GetButton("Horizontal") && managementAllowed)
         {
             _playerAnimator.SetBool("IsMooving", true);
             Move();
@@ -79,9 +75,9 @@ public class Player : MonoBehaviour
             _playerAnimator.SetBool("IsMooving", false);
         }
 
-        if(transform.position.y < -15)
+        if(transform.position.y <= -10 && transform.position.y > -10.5f)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Death();
         }
     }
 
@@ -89,12 +85,17 @@ public class Player : MonoBehaviour
         TakeHeatPoint?.Invoke(damage);
         if(_health.hp <= 0)
         {
-            DeathEvent?.Invoke(_playerAudioDeath);
+            Death();
             LoadingSceneOnDeathEvent?.Invoke(_numberscene, _delayedloadscene);
         }
         Twinkle();
     }
-  
+
+
+    private void Death() {
+        DeathEvent?.Invoke(_playerAudioDeath);
+        LoadingSceneOnDeathEvent?.Invoke(_numberscene, _delayedloadscene);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.tag == "Coins")
@@ -103,7 +104,6 @@ public class Player : MonoBehaviour
             {
                 PickUpCoinsEvent?.Invoke(_playerAudioCoins);
             }
-
         }
     }
 

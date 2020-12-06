@@ -11,8 +11,10 @@ public class AnimationAndSound : MonoBehaviour
     }
 
     public void PlayerDeathAudio(AudioSource audio) {
-        StartCoroutine(WaitForSeconds(3));
-        audio.Play();
+
+        audio.Play();        
+        Player.Singelton.managementAllowed = false;
+        StartCoroutine(WaitForSeconds(3));       
     }
 
     private void Jump(Animator animator, AudioSource audio) {
@@ -20,10 +22,9 @@ public class AnimationAndSound : MonoBehaviour
         audio.Play();
     }
 
-    private IEnumerator WaitForSeconds(int second) {
-        yield return new WaitForSeconds(second);       
+    private IEnumerator WaitForSeconds(int second) {       
+        yield return new WaitForSeconds(second);        
     }
+
     private void DontJump(Animator animator) => animator.SetBool("IsJump", false);
-
-
 }
