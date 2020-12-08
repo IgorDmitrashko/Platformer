@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3787544620947677637}
   - component: {fileID: 3787544620947677636}
   - component: {fileID: 4494097516251901363}
+  - component: {fileID: -6609401563067731754}
   m_Layer: 0
   m_Name: Saw
   m_TagString: Enemy
@@ -109,7 +110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bff382d7132c5a24bab6c122da2901ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 1
 --- !u!95 &3787544620947677636
 Animator:
   serializedVersion: 3
@@ -145,3 +145,15 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &-6609401563067731754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3787544620947677642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a077a8e81d8d9ff4c9695c18bf721bbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

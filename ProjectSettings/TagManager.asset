@@ -15,6 +15,7 @@ TagManager:
   - life2
   - life3
   - Coins
+  - FirePoint
   layers:
   - Default
   - TransparentFX

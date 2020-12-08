@@ -10,16 +10,20 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioSource _playerAudioJump;
     [SerializeField] private AudioSource _playerAudioDeath;
     [SerializeField] private AudioSource _playerAudioCoins;
+    [SerializeField] private AudioSource _playerAudioDamage;
+    [SerializeField] private AudioSource _playerAudioShot;
 
     private Material _materialBlick;
     private Material _materialDefault;
     private SpriteRenderer _spriteRend;
 
-    private readonly float speed = 3.4f;
+
+    private readonly float speed = 3.6f;
     private readonly float _jumpForce = 2.0f;
 
     private int _numberscene = 0;
     private int _delayedloadscene = 3;
+    private bool _playerTurnRight;
 
     [NonSerialized] private HealthPlayerControl _health;
     private SpriteRenderer _playerSpriteRenderer;
@@ -27,7 +31,10 @@ public class Player : MonoBehaviour
     public static Player Singelton { get; private set; }
     public bool managementAllowed = true;
 
-    public event Action<int> TakeHeatPoint;
+    public event Action<int> TakeHeatPointEvent;
+    public event Action<AudioSource> DamageSoundEvent;
+    public event Action<AudioSource> ShotEvent;
+
 
     public event Action<AudioSource> DeathEvent;
     public event Action<int, int> LoadingSceneOnDeathEvent;
@@ -45,6 +52,7 @@ public class Player : MonoBehaviour
         _pLayerRigitBody2D = GetComponent<Rigidbody2D>();
         _playerAnimator = GetComponent<Animator>();
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
+
     }
 
     private void Start() {
@@ -61,7 +69,7 @@ public class Player : MonoBehaviour
         else
         {
             DontJumpEvent?.Invoke(_playerAnimator);
-        }
+        }       
     }
     void Update() {
 
@@ -79,10 +87,16 @@ public class Player : MonoBehaviour
         {
             Death();
         }
+
+        if(Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            ShotEvent?.Invoke(_playerAudioShot);
+        }
     }
 
     public void TakeDamage(int damage) {
-        TakeHeatPoint?.Invoke(damage);
+        TakeHeatPointEvent?.Invoke(damage);
+        DamageSoundEvent?.Invoke(_playerAudioDamage);
         if(_health.hp <= 0)
         {
             Death();
@@ -115,21 +129,21 @@ public class Player : MonoBehaviour
     private void ResetMaterial() => _spriteRend.material = _materialDefault;
 
     private void Move() {
-
         Vector3 tempVector = Vector3.right * Input.GetAxis("Horizontal");
         transform.position = Vector3.MoveTowards(transform.position, transform.position + tempVector, speed * Time.deltaTime);
 
-        if(tempVector.x < 0)
+        if(tempVector.x < 0 && !_playerTurnRight)
         {
-            _playerSpriteRenderer.flipX = true;
+            transform.Rotate(0, 180, 0);
+            _playerTurnRight = true;
+           
         }
-        else
+        else if(tempVector.x > 0 && _playerTurnRight)
         {
-            _playerSpriteRenderer.flipX = false;
+            transform.Rotate(0, 180, 0);
+            _playerTurnRight = false;         
         }
-
     }
-
     private void Jump() {
         _pLayerRigitBody2D.AddForce(transform.up * _jumpForce, ForceMode2D.Impulse);
         if(_playerAnimator != null && _playerAudioJump != null)

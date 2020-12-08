@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class AnimationAndSound : MonoBehaviour
 {
+    [SerializeField] private AudioSource backGroundSound;
+
     private void Start() {
         Player.Singelton.JumpEvent += Jump;
         Player.Singelton.DontJumpEvent += DontJump;
-        Player.Singelton.DeathEvent += PlayerDeathAudio;
+        Player.Singelton.DeathEvent += DeathAudio;
+        Player.Singelton.DamageSoundEvent += DamageAudio;
+        Player.Singelton.ShotEvent += ShotAudio;
     }
 
-    public void PlayerDeathAudio(AudioSource audio) {
+    private void DamageAudio(AudioSource audio) {
+        audio.Play();
+    }
 
-        audio.Play();        
+    public void DeathAudio(AudioSource audio) {
+        backGroundSound.Stop();
+        audio.Play();
         Player.Singelton.managementAllowed = false;
-        StartCoroutine(WaitForSeconds(3));       
+        StartCoroutine(WaitForSeconds(3));
     }
 
     private void Jump(Animator animator, AudioSource audio) {
@@ -22,8 +30,12 @@ public class AnimationAndSound : MonoBehaviour
         audio.Play();
     }
 
-    private IEnumerator WaitForSeconds(int second) {       
-        yield return new WaitForSeconds(second);        
+    private void ShotAudio(AudioSource audio) {
+        audio.Play();
+    }
+
+    private IEnumerator WaitForSeconds(int second) {
+        yield return new WaitForSeconds(second);
     }
 
     private void DontJump(Animator animator) => animator.SetBool("IsJump", false);

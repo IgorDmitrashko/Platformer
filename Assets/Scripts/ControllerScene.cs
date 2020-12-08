@@ -9,19 +9,23 @@ public class ControllerScene : MonoBehaviour
     private PauseMenu _pauseMenu;
 
     private void Start() {
-        if(Player.Singelton!=null)
+        if(Player.Singelton != null)
         {
             Player.Singelton.LoadingSceneOnDeathEvent += LoadSceneDelayed;
+            
         }
-       
+
         if(_convas != null)
         {
             _pauseMenu = _convas.GetComponent<PauseMenu>();
-            _pauseMenu.LoadMainMenuEvent += LoadScene;           
+            _pauseMenu.LoadMainMenuEvent += LoadScene;
+            _pauseMenu.QuitGameEvent += QuitOfGame;
         }
     }
 
-
+    public void QuitOfGame() {
+        Application.Quit();
+    }
 
     public void LoadSceneDelayed(int level, int delayed = 5) {
         StartCoroutine(WaithLoad(level, delayed));
@@ -30,7 +34,7 @@ public class ControllerScene : MonoBehaviour
     public void LoadScene(int level) {
         SceneManager.LoadScene(level);
         PauseMenu.gameIsPaused = false;
-    }  
+    }
 
     private IEnumerator WaithLoad(int level, int delayed = 5) {
         yield return new WaitForSeconds(delayed);
