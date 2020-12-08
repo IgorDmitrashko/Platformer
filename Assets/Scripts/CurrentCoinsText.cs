@@ -21,11 +21,6 @@ public class CurrentCoinsText : MonoBehaviour
 
     public void AddCoins(AudioSource audio) {
         CurrentNumberCoins += 1;
-        PlayAudioCoins(audio);
     }
-
-    private void PlayAudioCoins(AudioSource audio) {
-        audio.Play();
-    }
-
+ 
 }

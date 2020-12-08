@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,12 @@ public class AnimationAndSound : MonoBehaviour
         Player.Singelton.DeathEvent += DeathAudio;
         Player.Singelton.DamageSoundEvent += DamageAudio;
         Player.Singelton.ShotEvent += ShotAudio;
+        Player.Singelton.PickUpCoinsEvent += CoinsAudio;
+
+    }
+
+    private void CoinsAudio(AudioSource audio) {
+        audio.Play();
     }
 
     private void DamageAudio(AudioSource audio) {
