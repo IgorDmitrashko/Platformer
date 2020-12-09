@@ -20,6 +20,11 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    public void ClickEsc() {
+        if(gameIsPaused) Resume();
+        else Pause();
+    }
+
     public void Resume() {
         _pauseMenuUi.SetActive(false);
         Time.timeScale = 1f;

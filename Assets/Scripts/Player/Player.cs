@@ -1,11 +1,12 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     private Rigidbody2D _pLayerRigitBody2D;
     private Animator _playerAnimator;
+
+    public Joystick joystick;
 
     [SerializeField] private AudioSource _playerAudioJump;
     [SerializeField] private AudioSource _playerAudioDeath;
@@ -18,12 +19,14 @@ public class Player : MonoBehaviour
     private SpriteRenderer _spriteRend;
 
 
-    private readonly float speed = 3.6f;
+    private readonly float _speed = 3.6f;
     private readonly float _jumpForce = 2.0f;
+    private float _moveInput;
 
     private int _numberscene = 0;
     private int _delayedloadscene = 3;
     private bool _playerTurnRight;
+    private bool doubleJump = false;
 
     [NonSerialized] private HealthPlayerControl _health;
     private SpriteRenderer _playerSpriteRenderer;
@@ -62,20 +65,22 @@ public class Player : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        if(Input.GetButton("Jump") && _isGround)
+        if(joystick.Vertical >= 0.5f && _isGround)
         {
             Jump();
-        }
+
+        }        
         else
         {
             DontJumpEvent?.Invoke(_playerAnimator);
-        }       
+        }
     }
     void Update() {
 
-        if(Input.GetButton("Horizontal") && managementAllowed)
+        if(joystick.Horizontal != 0)
         {
             _playerAnimator.SetBool("IsMooving", true);
+            _moveInput = joystick.Horizontal;
             Move();
         }
         else
@@ -90,7 +95,7 @@ public class Player : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
-            ShotEvent?.Invoke(_playerAudioShot);
+            Shot();
         }
     }
 
@@ -105,6 +110,9 @@ public class Player : MonoBehaviour
         Twinkle();
     }
 
+    public void Shot() {
+        ShotEvent?.Invoke(_playerAudioShot);
+    }
 
     private void Death() {
         DeathEvent?.Invoke(_playerAudioDeath);
@@ -129,19 +137,18 @@ public class Player : MonoBehaviour
     private void ResetMaterial() => _spriteRend.material = _materialDefault;
 
     private void Move() {
-        Vector3 tempVector = Vector3.right * Input.GetAxis("Horizontal");
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + tempVector, speed * Time.deltaTime);
+        Vector3 tempVector = Vector3.right * _moveInput;
+        transform.position = Vector3.MoveTowards(transform.position, transform.position + tempVector, _speed * Time.deltaTime);
 
         if(tempVector.x < 0 && !_playerTurnRight)
         {
             transform.Rotate(0, 180, 0);
             _playerTurnRight = true;
-           
         }
         else if(tempVector.x > 0 && _playerTurnRight)
         {
             transform.Rotate(0, 180, 0);
-            _playerTurnRight = false;         
+            _playerTurnRight = false;
         }
     }
     private void Jump() {

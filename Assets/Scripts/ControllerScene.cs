@@ -11,8 +11,7 @@ public class ControllerScene : MonoBehaviour
     private void Start() {
         if(Player.Singelton != null)
         {
-            Player.Singelton.LoadingSceneOnDeathEvent += LoadSceneDelayed;
-            
+            Player.Singelton.LoadingSceneOnDeathEvent += LoadSceneDelayed;            
         }
 
         if(_convas != null)

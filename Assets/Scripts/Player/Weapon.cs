@@ -11,7 +11,11 @@ public class Weapon : MonoBehaviour
         Player.Singelton.ShotEvent += Shoot;
     }
 
-    private void Shoot(AudioSource audio) {
+    public void Shoot(AudioSource audio) {
+        Instantiate(_ball, _firePoint.position, _firePoint.rotation);
+    }
+
+    public void Shoot() {
         Instantiate(_ball, _firePoint.position, _firePoint.rotation);
     }
 }

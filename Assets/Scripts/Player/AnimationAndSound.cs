@@ -6,6 +6,7 @@ using UnityEngine;
 public class AnimationAndSound : MonoBehaviour
 {
     [SerializeField] private AudioSource backGroundSound;
+   
 
     private void Start() {
         Player.Singelton.JumpEvent += Jump;

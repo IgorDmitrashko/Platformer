@@ -6,6 +6,7 @@ public class Platform : MonoBehaviour
 {
     [SerializeField] private GameObject _pointUp;
     [SerializeField] private GameObject _pointDown;
+    private int _speed = 50;
 
     private bool _movingUp;
 
@@ -24,11 +25,11 @@ public class Platform : MonoBehaviour
     private void Move() {
         if(_movingUp)
         {
-            transform.position = Vector3.MoveTowards(transform.position, _pointUp.transform.position, 1 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _pointUp.transform.position, _speed * Time.deltaTime);
         }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, _pointDown.transform.position, 1 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _pointDown.transform.position, _speed * Time.deltaTime);
         }
 
     }
