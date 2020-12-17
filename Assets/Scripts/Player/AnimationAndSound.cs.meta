@@ -3,7 +3,18 @@ guid: 361bb4f47ca3bcf46946f957f51a6ccc
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - backGroundSound: {fileID: 8159189647429706343, guid: 78c316fcda74cda409ded6782e2671f6,
+      type: 3}
+  - _playerAudioJump: {fileID: 8112354604690239359, guid: 526ebc492d2086e498ed3f740b15737b,
+      type: 3}
+  - _playerAudioDeath: {fileID: 4134372208287220443, guid: ae225aefc448b824a868bba7eace26e9,
+      type: 3}
+  - _playerAudioCoins: {instanceID: 0}
+  - _playerAudioDamage: {fileID: 88563294840314982, guid: 76d0239820608094d95ccffcd8c0b8d7,
+      type: 3}
+  - _playerAudioShot: {fileID: 6717527207576224408, guid: f1ffa912b5567384a888ff32e3eea497,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

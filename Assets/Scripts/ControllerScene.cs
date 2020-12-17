@@ -7,11 +7,13 @@ public class ControllerScene : MonoBehaviour
 {
     [SerializeField] private GameObject _convas;
     private PauseMenu _pauseMenu;
+    private int _numberNainMenu = 0;
+    int _delayedloadscene = 5;
 
     private void Start() {
         if(Player.Singelton != null)
         {
-            Player.Singelton.LoadingSceneOnDeathEvent += LoadSceneDelayed;            
+            Player.Singelton.EndGameEvent += LoadSceneDelayed;
         }
 
         if(_convas != null)
@@ -26,8 +28,12 @@ public class ControllerScene : MonoBehaviour
         Application.Quit();
     }
 
-    public void LoadSceneDelayed(int level, int delayed = 5) {
-        StartCoroutine(WaithLoad(level, delayed));
+    public void LoadSceneDelayed(int _delayedloadscene = 5) {
+        StartCoroutine(WaithLoad(_numberNainMenu, _delayedloadscene));
+    }
+
+    public void LoadSceneDelayed() {
+        StartCoroutine(WaithLoad(_numberNainMenu, _delayedloadscene));
     }
 
     public void LoadScene(int level) {

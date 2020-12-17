@@ -8,12 +8,6 @@ public class Player : MonoBehaviour
 
     public Joystick joystick;
 
-    [SerializeField] private AudioSource _playerAudioJump;
-    [SerializeField] private AudioSource _playerAudioDeath;
-    [SerializeField] private AudioSource _playerAudioCoins;
-    [SerializeField] private AudioSource _playerAudioDamage;
-    [SerializeField] private AudioSource _playerAudioShot;
-
     private Material _materialBlick;
     private Material _materialDefault;
     private SpriteRenderer _spriteRend;
@@ -23,10 +17,10 @@ public class Player : MonoBehaviour
     private readonly float _jumpForce = 2.0f;
     private float _moveInput;
 
-    private int _numberscene = 0;
+
     private int _delayedloadscene = 3;
     private bool _playerTurnRight;
-    private bool doubleJump = false;
+    private bool _isMooving = true;
 
     [NonSerialized] private HealthPlayerControl _health;
     private SpriteRenderer _playerSpriteRenderer;
@@ -35,17 +29,17 @@ public class Player : MonoBehaviour
     public bool managementAllowed = true;
 
     public event Action<int> TakeHeatPointEvent;
-    public event Action<AudioSource> DamageSoundEvent;
-    public event Action<AudioSource> ShotEvent;
+    public event Action DamageSoundEvent;
+    public event Action ShotEvent;
 
 
-    public event Action<AudioSource> DeathEvent;
-    public event Action<int, int> LoadingSceneOnDeathEvent;
+    public event Action DeathEvent;
+    public event Action EndGameEvent;
 
-    public event Action<Animator, AudioSource> JumpEvent;
+    public event Action<Animator> JumpEvent;
     public event Action<Animator> DontJumpEvent;
 
-    public event Action<AudioSource> PickUpCoinsEvent;
+    public event Action PickUpCoinsEvent;
     [NonSerialized] public bool _isGround;
 
 
@@ -69,7 +63,7 @@ public class Player : MonoBehaviour
         {
             Jump();
 
-        }        
+        }
         else
         {
             DontJumpEvent?.Invoke(_playerAnimator);
@@ -77,7 +71,7 @@ public class Player : MonoBehaviour
     }
     void Update() {
 
-        if(joystick.Horizontal != 0)
+        if(joystick.Horizontal != 0 && _isMooving)
         {
             _playerAnimator.SetBool("IsMooving", true);
             _moveInput = joystick.Horizontal;
@@ -101,31 +95,29 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage) {
         TakeHeatPointEvent?.Invoke(damage);
-        DamageSoundEvent?.Invoke(_playerAudioDamage);
+        DamageSoundEvent?.Invoke();
         if(_health.hp <= 0)
         {
             Death();
-            LoadingSceneOnDeathEvent?.Invoke(_numberscene, _delayedloadscene);
+            EndGameEvent?.Invoke();
         }
         Twinkle();
     }
 
     public void Shot() {
-        ShotEvent?.Invoke(_playerAudioShot);
+        ShotEvent?.Invoke();
     }
 
     private void Death() {
-        DeathEvent?.Invoke(_playerAudioDeath);
-        LoadingSceneOnDeathEvent?.Invoke(_numberscene, _delayedloadscene);
+        DeathEvent?.Invoke();
+        EndGameEvent?.Invoke();
+        _isMooving = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.tag == "Coins")
         {
-            if(_playerAudioCoins != null)
-            {
-                PickUpCoinsEvent?.Invoke(_playerAudioCoins);
-            }
+            PickUpCoinsEvent?.Invoke();
         }
     }
 
@@ -153,9 +145,9 @@ public class Player : MonoBehaviour
     }
     private void Jump() {
         _pLayerRigitBody2D.AddForce(transform.up * _jumpForce, ForceMode2D.Impulse);
-        if(_playerAnimator != null && _playerAudioJump != null)
+        if(_playerAnimator != null)
         {
-            JumpEvent?.Invoke(_playerAnimator, _playerAudioJump);
+            JumpEvent?.Invoke(_playerAnimator);
         }
 
     }

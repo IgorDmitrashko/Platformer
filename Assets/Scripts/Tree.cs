@@ -14,6 +14,9 @@ public class Tree : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.tag == "Player")
         {
+           //Player player =  collision.gameObject.GetComponent<Player>(); Невозможность движения, но не хочется делать, поле паблик
+            
+
             AudioSource.Play();
             levelComplete?.Invoke();
         }

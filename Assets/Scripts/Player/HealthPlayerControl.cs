@@ -17,7 +17,7 @@ public class HealthPlayerControl : MonoBehaviour
 
     }
 
-    private void Fill(AudioSource audio) {
+    private void Fill() {
         if(healthPlayer != null)
         {
             for(int i = 0; i < hp; i++)

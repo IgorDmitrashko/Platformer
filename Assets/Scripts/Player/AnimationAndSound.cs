@@ -6,7 +6,12 @@ using UnityEngine;
 public class AnimationAndSound : MonoBehaviour
 {
     [SerializeField] private AudioSource backGroundSound;
-   
+    [SerializeField] private AudioSource _playerAudioJump;
+    [SerializeField] private AudioSource _playerAudioDeath;
+    [SerializeField] private AudioSource _playerAudioCoins;
+    [SerializeField] private AudioSource _playerAudioDamage;
+    [SerializeField] private AudioSource _playerAudioShot;
+
 
     private void Start() {
         Player.Singelton.JumpEvent += Jump;
@@ -15,31 +20,30 @@ public class AnimationAndSound : MonoBehaviour
         Player.Singelton.DamageSoundEvent += DamageAudio;
         Player.Singelton.ShotEvent += ShotAudio;
         Player.Singelton.PickUpCoinsEvent += CoinsAudio;
-
     }
 
-    private void CoinsAudio(AudioSource audio) {
-        audio.Play();
+    private void CoinsAudio() {
+        _playerAudioCoins.Play();
     }
 
-    private void DamageAudio(AudioSource audio) {
-        audio.Play();
+    private void DamageAudio() {
+        _playerAudioDamage.Play();
     }
 
-    public void DeathAudio(AudioSource audio) {
+    public void DeathAudio() {
         backGroundSound.Stop();
-        audio.Play();
+        _playerAudioDeath.Play();
         Player.Singelton.managementAllowed = false;
         StartCoroutine(WaitForSeconds(3));
     }
 
-    private void Jump(Animator animator, AudioSource audio) {
+    private void Jump(Animator animator) {
         animator.SetBool("IsJump", true);
-        audio.Play();
+        _playerAudioJump.Play();
     }
 
-    private void ShotAudio(AudioSource audio) {
-        audio.Play();
+    private void ShotAudio() {
+        _playerAudioShot.Play();
     }
 
     private IEnumerator WaitForSeconds(int second) {

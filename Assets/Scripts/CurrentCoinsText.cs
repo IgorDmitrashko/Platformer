@@ -19,7 +19,7 @@ public class CurrentCoinsText : MonoBehaviour
        Player.Singelton.PickUpCoinsEvent += AddCoins;
     }
 
-    public void AddCoins(AudioSource audio) {
+    public void AddCoins() {
         CurrentNumberCoins += 1;
     }
  
