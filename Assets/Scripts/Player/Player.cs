@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     private Rigidbody2D _pLayerRigitBody2D;
     private Animator _playerAnimator;
-
     public Joystick joystick;
 
     private Material _materialBlick;
@@ -13,9 +13,17 @@ public class Player : MonoBehaviour
     private SpriteRenderer _spriteRend;
 
 
-    private readonly float _speed = 3.6f;
+    private float _speed = 3.6f;
     private readonly float _jumpForce = 2.0f;
     private float _moveInput;
+
+    
+
+    public float Speed
+    {
+        get { return _speed; }
+        set { _speed = value; }
+    }
 
 
     private int _delayedloadscene = 3;
@@ -26,6 +34,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer _playerSpriteRenderer;
 
     public static Player Singelton { get; private set; }
+
     public bool managementAllowed = true;
 
     public event Action<int> TakeHeatPointEvent;
@@ -143,12 +152,12 @@ public class Player : MonoBehaviour
             _playerTurnRight = false;
         }
     }
+
     private void Jump() {
         _pLayerRigitBody2D.AddForce(transform.up * _jumpForce, ForceMode2D.Impulse);
         if(_playerAnimator != null)
         {
             JumpEvent?.Invoke(_playerAnimator);
         }
-
     }
 }

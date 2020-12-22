@@ -7,14 +7,12 @@ using UnityEngine.UI;
 public class MainMeny : MonoBehaviour
 {
     [SerializeField] private Button[] levels;
+    [SerializeField] private LvlComplete lvlComplete;
     private int _levelComplete;
-  
-
-    void Start() {      
-        _levelComplete = PlayerPrefs.GetInt("LevelComplete");
+    
+    void Start() {              
         levels[0].interactable = true;
-        _levelComplete = 2;
-
+        _levelComplete = lvlComplete.levelComplete;
 
         for(int i = 1; i < levels.Length; i++)
         {
@@ -23,6 +21,8 @@ public class MainMeny : MonoBehaviour
 
         PickLvl(_levelComplete);
     }
+
+
 
     void PickLvl(int lvl) {
         LvlInteractable(lvl);

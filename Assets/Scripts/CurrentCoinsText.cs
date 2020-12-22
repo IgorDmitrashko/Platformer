@@ -8,6 +8,7 @@ public class CurrentCoinsText : MonoBehaviour
 {
     [SerializeField]
     private Text textCurrentCoins;
+    [SerializeField] private PointSave point;
 
     public int CurrentNumberCoins
     {
@@ -16,11 +17,13 @@ public class CurrentCoinsText : MonoBehaviour
     }
 
     private void Start() {
-       Player.Singelton.PickUpCoinsEvent += AddCoins;
-    }
+        if(point != null) CurrentNumberCoins = point.point;
+        Player.Singelton.PickUpCoinsEvent += AddCoins;
+    }  
 
     public void AddCoins() {
         CurrentNumberCoins += 1;
+        point.point = CurrentNumberCoins;
     }
- 
+
 }

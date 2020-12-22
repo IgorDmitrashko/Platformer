@@ -5485,6 +5485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textCurrentCoins: {fileID: 1004299334}
+  point: {fileID: 11400000, guid: 91fe4d78043124d4d8fa1f55c7a17cc3, type: 2}
 --- !u!4 &1012297011 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5943286897609215603, guid: e45d0581de01bea46a012073ee7ce998,

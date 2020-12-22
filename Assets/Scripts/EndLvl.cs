@@ -1,12 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
-public class Tree : MonoBehaviour
+public class EndLvl : MonoBehaviour
 {
     [SerializeField] private UnityEvent levelComplete;
+    [SerializeField] private LvlComplete lvlComplete;
+
     AudioSource AudioSource;
+
     private void Start() {
         AudioSource = GetComponent<AudioSource>();
     }
@@ -14,11 +16,9 @@ public class Tree : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.tag == "Player")
         {
-           //Player player =  collision.gameObject.GetComponent<Player>(); Невозможность движения, но не хочется делать, поле паблик
-            
-
             AudioSource.Play();
             levelComplete?.Invoke();
+            lvlComplete.levelComplete = SceneManager.sceneCount + 1;
         }
     }
 }
