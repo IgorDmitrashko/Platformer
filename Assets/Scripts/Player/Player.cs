@@ -14,10 +14,10 @@ public class Player : MonoBehaviour
 
 
     private float _speed = 3.6f;
-    private readonly float _jumpForce = 2.0f;
+    private readonly float _jumpForce = 5.0f;
     private float _moveInput;
 
-    
+
 
     public float Speed
     {
@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     }
 
 
-    private int _delayedloadscene = 3;
+   
     private bool _playerTurnRight;
     private bool _isMooving = true;
 
@@ -67,17 +67,6 @@ public class Player : MonoBehaviour
         _materialDefault = _spriteRend.material;
     }
 
-    private void FixedUpdate() {
-        if(joystick.Vertical >= 0.5f && _isGround)
-        {
-            Jump();
-
-        }
-        else
-        {
-            DontJumpEvent?.Invoke(_playerAnimator);
-        }
-    }
     void Update() {
 
         if(joystick.Horizontal != 0 && _isMooving)
@@ -99,6 +88,10 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
             Shot();
+        }
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Jump();
         }
     }
 
@@ -153,11 +146,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Jump() {
-        _pLayerRigitBody2D.AddForce(transform.up * _jumpForce, ForceMode2D.Impulse);
-        if(_playerAnimator != null)
+    public void Jump() {      
+        if(_playerAnimator != null && _isGround)
         {
             JumpEvent?.Invoke(_playerAnimator);
-        }
+            _pLayerRigitBody2D.AddForce(transform.up * _jumpForce, ForceMode2D.Impulse);          
+        }       
     }
 }

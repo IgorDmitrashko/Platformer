@@ -18,4 +18,5 @@ public class Enemy : MonoBehaviour
     private void Death() {
         Destroy(gameObject);
     }
+
 }

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class IsGround : MonoBehaviour
 {
-   
-
     private void Start() {           
     }
 

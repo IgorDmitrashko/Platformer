@@ -14,9 +14,9 @@ public class AnimationAndSound : MonoBehaviour
 
 
     private void Start() {
-        Player.Singelton.JumpEvent += Jump;
-        Player.Singelton.DontJumpEvent += DontJump;
+        Player.Singelton.JumpEvent += Jump;        
         Player.Singelton.DeathEvent += DeathAudio;
+        Player.Singelton.DontJumpEvent += DontJump;
         Player.Singelton.DamageSoundEvent += DamageAudio;
         Player.Singelton.ShotEvent += ShotAudio;
         Player.Singelton.PickUpCoinsEvent += CoinsAudio;
@@ -33,21 +33,22 @@ public class AnimationAndSound : MonoBehaviour
     public void DeathAudio() {
         backGroundSound.Stop();
         _playerAudioDeath.Play();
-        Player.Singelton.managementAllowed = false;
-        StartCoroutine(WaitForSeconds(3));
+        Player.Singelton.managementAllowed = false;       
     }
 
     private void Jump(Animator animator) {
         animator.SetBool("IsJump", true);
         _playerAudioJump.Play();
+        StartCoroutine( WaitForSeconds(0.4f, animator));
     }
 
     private void ShotAudio() {
         _playerAudioShot.Play();
     }
 
-    private IEnumerator WaitForSeconds(int second) {
+    private IEnumerator WaitForSeconds(float second, Animator animator) {             
         yield return new WaitForSeconds(second);
+        DontJump(animator);
     }
 
     private void DontJump(Animator animator) => animator.SetBool("IsJump", false);
