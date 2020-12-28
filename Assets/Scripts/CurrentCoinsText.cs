@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CurrentCoinsText : MonoBehaviour
 {
     [SerializeField]
-    private Text textCurrentCoins;
-    [SerializeField] private PointSave point;
+    private Text textCurrentCoins;   
 
     public int CurrentNumberCoins
     {
@@ -16,14 +13,14 @@ public class CurrentCoinsText : MonoBehaviour
         set { textCurrentCoins.text = value.ToString(); }
     }
 
-    private void Start() {
-        if(point != null) CurrentNumberCoins = point.point;
+    private void Start() {       
         Player.Singelton.PickUpCoinsEvent += AddCoins;
+        CurrentNumberCoins = PlayerPrefs.GetInt("Coins");
     }  
 
     public void AddCoins() {
-        CurrentNumberCoins += 1;
-        point.point = CurrentNumberCoins;
+        CurrentNumberCoins ++;
+        PlayerPrefs.SetInt("Coins", CurrentNumberCoins);
     }
 
 }

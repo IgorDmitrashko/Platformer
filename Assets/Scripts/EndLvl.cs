@@ -4,9 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class EndLvl : MonoBehaviour
 {
-    [SerializeField] private UnityEvent levelComplete;
-    [SerializeField] private LvlComplete lvlComplete;
-
+    [SerializeField] private UnityEvent levelComplete;   
     AudioSource AudioSource;
 
     private void Start() {
@@ -17,8 +15,7 @@ public class EndLvl : MonoBehaviour
         if(collision.tag == "Player")
         {
             AudioSource.Play();
-            levelComplete?.Invoke();
-            lvlComplete.levelComplete = SceneManager.sceneCount + 1;
+            levelComplete?.Invoke();            
         }
     }
 }

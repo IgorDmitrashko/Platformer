@@ -6708,6 +6708,17 @@ MonoBehaviour:
   levelComplete:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 686940831}
+        m_MethodName: EndLvl
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 686940829}
         m_MethodName: LoadSceneDelayed
         m_Mode: 3
@@ -6719,7 +6730,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  lvlComplete: {fileID: 11400000, guid: 0963987a393296c438aa0eb6645a64e1, type: 2}
 --- !u!212 &447930757
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7233,6 +7243,7 @@ GameObject:
   m_Component:
   - component: {fileID: 686940830}
   - component: {fileID: 686940829}
+  - component: {fileID: 686940831}
   m_Layer: 0
   m_Name: SceneController
   m_TagString: Untagged
@@ -7267,6 +7278,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &686940831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686940828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f879eb972adff4198d5ce0d0d7cd36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &720569848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10106,7 +10129,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textCurrentCoins: {fileID: 1974644168}
-  point: {fileID: 11400000, guid: 91fe4d78043124d4d8fa1f55c7a17cc3, type: 2}
 --- !u!114 &1974644168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10182,7 +10204,7 @@ PrefabInstance:
     - target: {fileID: 5700409165542181281, guid: d84f946351ddfab4e9de7263b8049c40,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 7.600006
+      value: 7.5999756
       objectReference: {fileID: 0}
     - target: {fileID: 5700409165542181281, guid: d84f946351ddfab4e9de7263b8049c40,
         type: 3}

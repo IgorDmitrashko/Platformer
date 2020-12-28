@@ -12,5 +12,4 @@ public class AbilityToBeKilled : MonoBehaviour
             Destroy(enemy);
         }
     }
-     
 }

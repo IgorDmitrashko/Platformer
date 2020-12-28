@@ -1,18 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class MainMeny : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
     [SerializeField] private Button[] levels;
-    [SerializeField] private LvlComplete lvlComplete;
+
     private int _levelComplete;
-    
-    void Start() {              
-        levels[0].interactable = true;
-        _levelComplete = lvlComplete.levelComplete;
+
+    void Start() {
+        _levelComplete = PlayerPrefs.GetInt("LevelComplete");
 
         for(int i = 1; i < levels.Length; i++)
         {
@@ -22,15 +18,13 @@ public class MainMeny : MonoBehaviour
         PickLvl(_levelComplete);
     }
 
-
-
-    void PickLvl(int lvl) {
+    public void PickLvl(int lvl) {
         LvlInteractable(lvl);
     }
 
     private void LvlInteractable(int id) {
         for(int i = 0; i < id; i++)
-        {
+        {          
             levels[i].interactable = true;
         }
     }

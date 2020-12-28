@@ -6,15 +6,14 @@ using UnityEngine.SceneManagement;
 public class ControllerScene : MonoBehaviour
 {
     [SerializeField] private GameObject _convas;
+
     private PauseMenu _pauseMenu;
     private int _numberNainMenu = 0;
-    int _delayedloadscene = 5;
+    private int _delayedloadscene = 5;
 
-    private void Start() {
-        if(Player.Singelton != null)
-        {
-            Player.Singelton.EndGameEvent += LoadSceneDelayed;
-        }
+  
+    private void Start() {      
+        if(Player.Singelton != null) Player.Singelton.EndGameEvent += LoadSceneDelayed;
 
         if(_convas != null)
         {
@@ -22,6 +21,7 @@ public class ControllerScene : MonoBehaviour
             _pauseMenu.LoadMainMenuEvent += LoadScene;
             _pauseMenu.QuitGameEvent += QuitOfGame;
         }
+        
     }
 
     public void QuitOfGame() {
