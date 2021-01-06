@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     [NonSerialized] private HealthPlayerControl _health;
     private SpriteRenderer _playerSpriteRenderer;
 
-    public static Player Singelton { get; private set; }
+    public static Player Singleton { get; private set; }
 
     public bool managementAllowed = true;
 
@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
 
 
     private void Awake() {
-        Singelton = this;
+        Singleton = this;
         _health = GetComponent<HealthPlayerControl>();
         _pLayerRigitBody2D = GetComponent<Rigidbody2D>();
         _playerAnimator = GetComponent<Animator>();

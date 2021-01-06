@@ -8,7 +8,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private Transform _firePoint;
     [SerializeField] private GameObject _ball;
     private void Start() {
-        Player.Singelton.ShotEvent += Shoot;
+        Player.Singleton.ShotEvent += Shoot;
     }
 
     public void Shoot(AudioSource audio) {

@@ -14,12 +14,12 @@ public class AnimationAndSound : MonoBehaviour
 
 
     private void Start() {
-        Player.Singelton.JumpEvent += Jump;        
-        Player.Singelton.DeathEvent += DeathAudio;
-        Player.Singelton.DontJumpEvent += DontJump;
-        Player.Singelton.DamageSoundEvent += DamageAudio;
-        Player.Singelton.ShotEvent += ShotAudio;
-        Player.Singelton.PickUpCoinsEvent += CoinsAudio;
+        Player.Singleton.JumpEvent += Jump;        
+        Player.Singleton.DeathEvent += DeathAudio;
+        Player.Singleton.DontJumpEvent += DontJump;
+        Player.Singleton.DamageSoundEvent += DamageAudio;
+        Player.Singleton.ShotEvent += ShotAudio;
+        Player.Singleton.PickUpCoinsEvent += CoinsAudio;
     }
 
     private void CoinsAudio() {
@@ -33,7 +33,7 @@ public class AnimationAndSound : MonoBehaviour
     public void DeathAudio() {
         backGroundSound.Stop();
         _playerAudioDeath.Play();
-        Player.Singelton.managementAllowed = false;       
+        Player.Singleton.managementAllowed = false;       
     }
 
     private void Jump(Animator animator) {

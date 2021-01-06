@@ -12,8 +12,8 @@ public class HealthPlayerControl : MonoBehaviour
     private void Start() {
         healthPlayer = GetComponent<HealthPlayer>();
         
-        Player.Singelton.TakeHeatPointEvent += TakeHp;
-        Player.Singelton.DeathEvent += Fill;
+        Player.Singleton.TakeHeatPointEvent += TakeHp;
+        Player.Singleton.DeathEvent += Fill;
 
     }
 

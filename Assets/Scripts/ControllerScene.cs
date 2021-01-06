@@ -13,7 +13,7 @@ public class ControllerScene : MonoBehaviour
 
   
     private void Start() {      
-        if(Player.Singelton != null) Player.Singelton.EndGameEvent += LoadSceneDelayed;
+        if(Player.Singleton != null) Player.Singleton.EndGameEvent += LoadSceneDelayed;
 
         if(_convas != null)
         {

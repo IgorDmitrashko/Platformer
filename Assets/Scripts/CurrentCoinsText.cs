@@ -14,7 +14,7 @@ public class CurrentCoinsText : MonoBehaviour
     }
 
     private void Start() {       
-        Player.Singelton.PickUpCoinsEvent += AddCoins;
+        Player.Singleton.PickUpCoinsEvent += AddCoins;
         CurrentNumberCoins = PlayerPrefs.GetInt("Coins");
     }  
 
