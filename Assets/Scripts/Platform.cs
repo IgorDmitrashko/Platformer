@@ -6,7 +6,7 @@ public class Platform : MonoBehaviour
 {
     [SerializeField] private GameObject _pointUp;
     [SerializeField] private GameObject _pointDown;
-    private int _speed = 50;
+    public int _speed = 8;
 
     private bool _movingUp;
 

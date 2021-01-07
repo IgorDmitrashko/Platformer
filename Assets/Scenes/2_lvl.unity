@@ -6584,6 +6584,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pointUp: {fileID: 1821227426}
   _pointDown: {fileID: 1581553982}
+  _speed: 50
 --- !u!4 &190804108 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5943286897609215603, guid: e45d0581de01bea46a012073ee7ce998,
